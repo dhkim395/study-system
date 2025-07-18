@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>마이페이지</title>
+</head>
+<body>
+<h2>마이페이지 - [[${user.username}]]님</h2>
+
+<h3>📌 내가 만든 스터디</h3>
+<ul>
+    <li th:each="study : ${createdStudies}">
+        <span th:text="${study.title}"></span>
+    </li>
+</ul>
+
+<h3>✅ 내가 신청한 스터디</h3>
+<ul>
+    <li th:each="study : ${joinedStudies}">
+        <span th:text="${study.title}"></span>
+    </li>
+</ul>
+
+</body>
+</html>

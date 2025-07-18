@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>스터디 상세보기</title></head>
+<body>
+<h2 th:text="${study.title}">스터디 제목</h2>
+
+<p><strong>설명:</strong> <span th:text="${study.description}"></span></p>
+<p><strong>모집 인원:</strong> <span th:text="${study.maxParticipants}"></span></p>
+<p><strong>마감일:</strong> <span th:text="${study.deadline}"></span></p>
+
+<hr/>
+
+<div th:if="${canApply}">
+    <form th:action="@{'/study/' + ${study.id} + '/apply'}" method="post">
+        <button type="submit">신청하기</button>
+    </form>
+</div>
+
+<p th:if="${!canApply}" th:text="${applyMessage}" style="color: red;"></p>
+
+<a th:href="@{/study/list}">← 목록으로</a>
+</body>
+</html>

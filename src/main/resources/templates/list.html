@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>스터디 목록</title></head>
+<body>
+<h2>스터디 목록</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>모집 인원</th>
+        <th>마감일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="study : ${studies}">
+        <td th:text="${study.id}"></td>
+        <td><a th:href="@{'/study/' + ${study.id}}" th:text="${study.title}"></a></td>
+        <td th:text="${study.maxParticipants}"></td>
+        <td th:text="${study.deadline}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <span th:if="${currentPage > 1}">
+        <a th:href="@{/study/list(page=${currentPage - 1})}">이전</a>
+    </span>
+    <span>페이지 [[${currentPage}]] / [[${totalPages}]]</span>
+    <span th:if="${currentPage < totalPages}">
+        <a th:href="@{/study/list(page=${currentPage + 1})}">다음</a>
+    </span>
+</div>
+
+<a th:href="@{/study/create}">스터디 개설</a>
+</body>
+</html>

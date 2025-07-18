@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>스터디 검색</title></head>
+<body>
+<h2>스터디 검색 결과</h2>
+
+<form th:action="@{/study/search}" method="get">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력" required/>
+    <button type="submit">검색</button>
+</form>
+
+<p th:if="${#lists.isEmpty(studies)}">검색 결과가 없습니다.</p>
+
+<table th:if="${not #lists.isEmpty(studies)}" border="1">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="study : ${studies}">
+        <td th:text="${study.id}"></td>
+        <td><a th:href="@{'/study/' + ${study.id}}" th:text="${study.title}"></a></td>
+        <td th:text="${study.createdBy}">작성자ID</td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <span th:if="${currentPage > 1}">
+        <a th:href="@{/study/search(keyword=${keyword}, page=${currentPage - 1})}">이전</a>
+    </span>
+    <span>페이지 [[${currentPage}]] / [[${totalPages}]]</span>
+    <span th:if="${currentPage < totalPages}">
+        <a th:href="@{/study/search(keyword=${keyword}, page=${currentPage + 1})}">다음</a>
+    </span>
+</div>
+
+<a th:href="@{/study/list}">목록으로</a>
+</body>
+</html>

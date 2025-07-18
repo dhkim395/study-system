@@ -1,0 +1,65 @@
+<mapper namespace="com.example.studyapp.mapper.StudyBoardMapper">
+
+    <select id="findByCreatorId" resultType="com.example.studyapp.domain.StudyBoard">
+        SELECT * FROM study_board WHERE created_by = #{creatorId}
+    </select>
+
+    <select id="findJoinedStudiesByUserId" resultType="com.example.studyapp.domain.StudyBoard">
+        SELECT sb.*
+        FROM study_board sb
+        JOIN study_join sj ON sb.id = sj.study_board_id
+        WHERE sj.study_user_id = #{userId}
+    </select>
+    <insert id="insertStudy">
+        INSERT INTO study_board (title, description, max_participants, deadline, created_by)
+        VALUES (#{title}, #{description}, #{maxParticipants}, #{deadline}, #{createdBy})
+    </insert>
+
+    <select id="findById" resultType="com.example.studyapp.domain.StudyBoard">
+        SELECT * FROM study_board WHERE id = #{id}
+    </select>
+
+    <select id="countParticipants" resultType="int">
+        SELECT COUNT(*) FROM study_join WHERE study_board_id = #{boardId}
+    </select>
+
+    <select id="isAlreadyJoined" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM study_join
+        WHERE study_board_id = #{boardId} AND study_user_id = #{userId}
+    </select>
+
+    <insert id="joinStudy">
+        INSERT INTO study_join (study_board_id, study_user_id)
+        VALUES (#{boardId}, #{userId})
+    </insert>
+    <select id="findPaged" resultType="com.example.studyapp.domain.StudyBoard">
+        SELECT *
+        FROM study_board
+        ORDER BY id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM study_board
+    </select>
+    <select id="searchStudies" resultType="com.example.studyapp.domain.StudyBoard">
+        SELECT sb.*
+        FROM study_board sb
+        JOIN study_user su ON sb.created_by = su.id
+        WHERE sb.title LIKE CONCAT('%', #{keyword}, '%')
+        OR su.username LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY sb.id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countSearchResults" resultType="int">
+        SELECT COUNT(*)
+        FROM study_board sb
+        JOIN study_user su ON sb.created_by = su.id
+        WHERE sb.title LIKE CONCAT('%', #{keyword}, '%')
+        OR su.username LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+
+</mapper>

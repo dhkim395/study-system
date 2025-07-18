@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>스터디 개설</title></head>
+<body>
+<h2>스터디 개설</h2>
+<form th:action="@{/study/create}" method="post" th:object="${study}">
+    <label>제목: <input type="text" th:field="*{title}" required /></label><br/>
+    <label>설명: <textarea th:field="*{description}" required></textarea></label><br/>
+    <label>모집 인원: <input type="number" th:field="*{maxParticipants}" required /></label><br/>
+    <label>마감일: <input type="date" th:field="*{deadline}" required /></label><br/>
+    <button type="submit">개설하기</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.studyapp.mapper.StudyUserMapper">
+
+    <insert id="insertUser">
+        INSERT INTO study_user (username, password)
+        VALUES (#{username}, #{password})
+    </insert>
+
+    <select id="findByUsername" resultType="com.example.studyapp.domain.StudyUser">
+        SELECT * FROM study_user WHERE username = #{username}
+    </select>
+
+    <select id="findById" resultType="com.example.studyapp.domain.StudyUser">
+        SELECT * FROM study_user WHERE id = #{id}
+    </select>
+
+</mapper>
